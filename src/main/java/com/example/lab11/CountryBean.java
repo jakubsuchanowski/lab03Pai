@@ -7,6 +7,8 @@ public class CountryBean implements Serializable {
     private String name;
     private long population;
 
+    private long surfaceArea;
+
 
 
     public String getCode() {
@@ -33,8 +35,11 @@ public class CountryBean implements Serializable {
         this.population = population;
     }
 
+    public long getSurfaceArea() {
+        return surfaceArea;
+    }
 
-
-
-
+    public void setSurfaceArea(long surfaceArea) {
+        this.surfaceArea = surfaceArea;
+    }
 }

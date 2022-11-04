@@ -1,7 +1,5 @@
 package com.example.lab11;
 
-import lombok.SneakyThrows;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
+
+import static java.lang.System.out;
 
 
 @WebServlet(name = "ListServlet", value = "/ListServlet")
@@ -23,7 +23,7 @@ public class ListServlet extends HttpServlet {
         //pobranie sterownika do MySQL:
         Class.forName("com.mysql.cj.jdbc.Driver");
         //utworzenie obiektu połączenia do bazy danych MySQL:
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world?serverTimezone=UTC?", "root", "root");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
         //utworzenie obiektu do wykonywania zapytań do bd:
         Statement st = conn.createStatement();
         String query = "SELECT * FROM Country WHERE Continent = 'Europe'";
@@ -34,14 +34,17 @@ public class ListServlet extends HttpServlet {
         ArrayList<CountryBean> list = new ArrayList<CountryBean>();
         while (rs.next()){
             country = new CountryBean();
-            country.setCode(rs.getString("code"));
+            //pobranie danych i przypisanie ich do CountryBean
             country.setName(rs.getString("name"));
+            country.setCode(rs.getString("code"));
             country.setPopulation(rs.getLong("population"));
+            country.setSurfaceArea(rs.getLong("surfaceArea"));
             list.add(country);
 
         }
         session.setAttribute("list", list);
         response.sendRedirect("countryList.jsp");
+
 
 
 
@@ -52,7 +55,7 @@ public class ListServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception e) {
-            System.out.println("error");
+            out.println("error");
         }
     }
 
@@ -63,23 +66,8 @@ public class ListServlet extends HttpServlet {
         }
         catch (Exception e)
         {
-            System.out.println("error");
+            out.println("error");
         }
 
     }
-
-//    @SneakyThrows
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-//        processRequest(request, response);
-//
-//    }
-//
-//    @SneakyThrows
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-//        processRequest(request, response);
-//
-//
-//    }
 }

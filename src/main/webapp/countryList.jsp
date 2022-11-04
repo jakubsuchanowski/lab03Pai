@@ -1,5 +1,6 @@
 <%@ page import="com.example.lab11.CountryBean" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: kubas
   Date: 04.11.2022
@@ -17,8 +18,10 @@
         (ArrayList<CountryBean>)session.getAttribute("list");
     for(CountryBean country:list){
         out.println(country.getName());
-        out.println(country.getCode());
-        out.println(country.getPopulation());
+//        out.println(country.getCode());
+//        out.println(country.getPopulation());
+        out.println("<a href='details.jsp?i=" + list.indexOf(country)+"'>Details</a>");
+        out.println("<br>");
 
     }
 
